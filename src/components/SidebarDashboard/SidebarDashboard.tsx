@@ -3,7 +3,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { AppSidebar } from "../app-sidebar";
+import { AppSidebar } from "./app-sidebar";
 
 export default function SidebarDashboard({
   children,

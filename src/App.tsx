@@ -10,7 +10,9 @@ function App() {
     <>
       <QueryClientProvider client={queryClient}>
         <SidebarDashboard>
-          <Router />
+          <main className="p-6">
+            <Router />
+          </main>
         </SidebarDashboard>
       </QueryClientProvider>
     </>
