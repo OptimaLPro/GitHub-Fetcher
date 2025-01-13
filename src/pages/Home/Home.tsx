@@ -1,7 +1,7 @@
-import React from "react";
+import RepositoryList from "./RepositoryList/RepositoryList";
 
 const Home = () => {
-  return <div>Home</div>;
+return <RepositoryList />;
 };
 
 export default Home;
