@@ -69,7 +69,7 @@ const CardRepo: React.FC<CardRepoProps> = ({
         <p>Language: {repo.language || "Unknown"}</p>
       </CardContent>
       <CardFooter className="flex items-center justify-between mt-auto">
-        <Button variant="secondary">⭐ {repo.stargazers_count}</Button>
+        <Button variant="secondary">⭐ {repo.stargazers_count.toLocaleString()}</Button>
         <Button onClick={() => RedirectGithub(repo.html_url)}>View Repo</Button>
       </CardFooter>
     </Card>

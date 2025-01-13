@@ -1,17 +1,36 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { SearchProps } from "@/types/search";
 
-const fetchRepositories = async ({ page = 1, perPage = 10 }) => {
+const fetchRepositories = async ({
+  page,
+  perPage,
+  stars,
+  query,
+  order,
+}: SearchProps) => {
   const response = await axios.get("http://localhost:5000/api/repositories", {
-    params: { page: page, per_page: perPage },
+    params: {
+      page: page,
+      per_page: perPage,
+      stars: stars,
+      query: query,
+      order: order,
+    },
   });
   return response.data;
 };
 
-const useRepositories = (page: number, perPage: number) =>
+const useRepositories = (
+  page = 1,
+  perPage = 9,
+  stars = 1,
+  query = "",
+  order = "desc"
+) =>
   useQuery({
-    queryKey: ["repositories", page, perPage],
-    queryFn: () => fetchRepositories({ page, perPage }),
+    queryKey: ["repositories", page, perPage, stars, query, order],
+    queryFn: () => fetchRepositories({ page, perPage, stars, query, order }),
     retry: 0,
   });
 

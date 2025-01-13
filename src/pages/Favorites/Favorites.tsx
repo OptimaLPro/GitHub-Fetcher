@@ -9,6 +9,10 @@ export default function Favorites() {
     return storedFavorites ? JSON.parse(storedFavorites) : {};
   });
 
+  if (Object.keys(favorites).length === 0) {
+    return <p className="text-center mt-[100px]">No favorite repositories yet.</p>;
+  }
+
   const favoriteRepos = Object.values(favorites);
 
   return (
