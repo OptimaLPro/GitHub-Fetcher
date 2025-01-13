@@ -10,13 +10,13 @@ import {
   CardTitle,
 } from "../ui/card";
 
-interface CardRepoProps {
+type CardRepoProps = {
   repo: any;
   favorites: { [key: string]: boolean };
   setFavorites: React.Dispatch<
     React.SetStateAction<{ [key: string]: boolean }>
   >;
-}
+};
 
 const CardRepo: React.FC<CardRepoProps> = ({
   repo,
@@ -27,9 +27,17 @@ const CardRepo: React.FC<CardRepoProps> = ({
     window.open(url, "_blank");
   };
 
-  const toggleFavorite = (id: string) => {
-    setFavorites((prev) => {
-      const newFavorites = { ...prev, [id]: !prev[id] };
+  const toggleFavorite = (repo: any) => {
+    console.log(repo);
+    setFavorites((prev: any) => {
+      const newFavorites = { ...prev };
+
+      if (newFavorites[repo.id]) {
+        delete newFavorites[repo.id];
+      } else {
+        newFavorites[repo.id] = repo;
+      }
+
       localStorage.setItem("favorites", JSON.stringify(newFavorites));
       return newFavorites;
     });
@@ -38,7 +46,7 @@ const CardRepo: React.FC<CardRepoProps> = ({
   return (
     <Card key={repo.id} className="relative flex flex-col shadow-md">
       <motion.button
-        onClick={() => toggleFavorite(repo.id)}
+        onClick={() => toggleFavorite(repo)}
         className="absolute top-4 right-4"
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0 }}
