@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 
-export default function AlertAPI() {
+export default function ToolipAlert() {
   return (
     <TooltipProvider delayDuration={100}>
       <Tooltip>

@@ -16,25 +16,32 @@ export default function RepositoryList() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState<string>("");
   const [stars, setStars] = useState<number>(0);
-
+  const [order, setOrder] = useState<string>("desc");
   const { data, isLoading, isError, refetch } = useRepositories(
     page,
     9,
     stars,
-    query
+    query,
+    order
   );
 
   if (isLoading) return <Loader />;
   if (isError) return <ErrorLimit refetch={refetch} />;
 
   const { sortedData, totalCount } = data;
+  
   const mostStarred = sortedData[0]?.stargazers_count + 1 || 0;
 
-  const handleSearch = (newQuery: string, newStars: number) => {
-    console.log("searching", newQuery, newStars);
+  const handleSearch = (
+    newQuery: string,
+    newStars: number,
+    newOrder: string
+  ) => {
+    console.log("searching", newQuery, newStars, newOrder);
     setQuery(newQuery);
     setStars(newStars);
     setPage(1);
+    setOrder(newOrder);
   };
 
   return (
@@ -47,6 +54,7 @@ export default function RepositoryList() {
               maxStars={mostStarred}
               query={query}
               stars={stars}
+              order={order}
             />
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">

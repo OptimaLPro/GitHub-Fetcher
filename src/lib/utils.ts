@@ -11,3 +11,8 @@ export const isOlderThan = (addedDate: string, TimeMS: number) => {
   const diffInTime = currentDate.getTime() - addedDateObj.getTime();
   return diffInTime > TimeMS;
 };
+
+export const getMaxStars = () => {
+  const storedMaxStars = localStorage.getItem("mostStarred");
+  return storedMaxStars ? parseInt(storedMaxStars) : 0;
+};

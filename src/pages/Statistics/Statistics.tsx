@@ -9,7 +9,7 @@ import {
 import { Label } from "@/components/ui/label";
 import { LanguageChart } from "@/components/Charts/LanguagesChart";
 import { StarsByLang } from "@/components/Charts/StarsByLangChart";
-import AlertAPI from "./AlertAPI";
+import ToolipAlert from "./ToolipAlert";
 
 export default function Statistics() {
   const [selectedChart, setSelectedChart] = useState<string>("");
@@ -26,7 +26,7 @@ export default function Statistics() {
             <SelectTrigger className="w-[300px]">
               <SelectValue placeholder="Select a Chart" />
             </SelectTrigger>
-            <AlertAPI />
+            <ToolipAlert />
             <SelectContent>
               <SelectItem value="language">Language Chart</SelectItem>
               <SelectItem value="stars">Stars by Language Chart</SelectItem>
