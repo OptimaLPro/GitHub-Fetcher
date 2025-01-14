@@ -1,4 +1,4 @@
-import { Calendar, ChartLine, Heart, Home, Inbox, Search, Settings } from "lucide-react"
+import { ChartLine, Heart, Home } from "lucide-react";
 
 import {
   Sidebar,
@@ -9,10 +9,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
-import { Link } from "react-router"
+} from "@/components/ui/sidebar";
+import { Link } from "react-router";
 
-// Menu items.
 const items = [
   {
     title: "Home",
@@ -26,10 +25,10 @@ const items = [
   },
   {
     title: "Statistics",
-    url: "#",
+    url: "/statistics",
     icon: ChartLine,
   },
-]
+];
 
 export function AppSidebar() {
   return (
@@ -54,5 +53,5 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

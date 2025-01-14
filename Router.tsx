@@ -3,6 +3,7 @@ import { useLocation, Route, Routes } from "react-router";
 import PageTransition from "@/components/PageTransition/PageTransition";
 import Favorites from "@/pages/Favorites/Favorites";
 import Home from "@/pages/Home/Home";
+import Statistics from "@/pages/Statistics/Statistics";
 
 const Router = () => {
   const location = useLocation();
@@ -23,6 +24,14 @@ const Router = () => {
           element={
             <PageTransition>
               <Favorites />
+            </PageTransition>
+          }
+        />
+        <Route
+          path="/statistics"
+          element={
+            <PageTransition>
+              <Statistics />
             </PageTransition>
           }
         />

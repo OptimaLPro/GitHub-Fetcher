@@ -19,6 +19,9 @@ type CardRepoProps = {
   >;
 };
 
+// Add a new field to store the date and time that the repository was added to the local storage
+const added_localstorage = new Date().toLocaleString();
+
 const CardRepo: React.FC<CardRepoProps> = ({
   repo,
   favorites,
@@ -32,7 +35,7 @@ const CardRepo: React.FC<CardRepoProps> = ({
       if (newFavorites[repo.id]) {
         delete newFavorites[repo.id];
       } else {
-        newFavorites[repo.id] = repo;
+        newFavorites[repo.id] = { ...repo, added_localstorage };
       }
 
       localStorage.setItem("favorites", JSON.stringify(newFavorites));

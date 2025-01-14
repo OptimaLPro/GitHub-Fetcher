@@ -6,29 +6,26 @@ import ErrorLimit from "@/components/ui/ErrorLimit";
 import Loader from "@/components/ui/Loader";
 import useRepositories from "@/hooks/useRepositories";
 import { AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function RepositoryList() {
-  const [fetchedData, setFetchedData] = useState<any>(null);
   const [favorites, setFavorites] = useState<{ [key: string]: boolean }>(() => {
     const storedFavorites = localStorage.getItem("favorites");
     return storedFavorites ? JSON.parse(storedFavorites) : {};
   });
-
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState<string>("");
   const [stars, setStars] = useState<number>(0);
 
-  const { data, isLoading, isError } = useRepositories(page, 9, stars, query);
-
-  useEffect(() => {
-    if (data) {
-      setFetchedData(data);
-    }
-  }, [data]);
+  const { data, isLoading, isError, refetch } = useRepositories(
+    page,
+    9,
+    stars,
+    query
+  );
 
   if (isLoading) return <Loader />;
-  if (isError) return <ErrorLimit />;
+  if (isError) return <ErrorLimit refetch={refetch} />;
 
   const { sortedData, totalCount } = data;
   const mostStarred = sortedData[0]?.stargazers_count + 1 || 0;
