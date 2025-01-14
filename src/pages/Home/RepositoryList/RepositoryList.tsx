@@ -29,7 +29,6 @@ export default function RepositoryList() {
   if (isError) return <ErrorLimit refetch={refetch} />;
 
   const { sortedData, totalCount } = data;
-  
   const mostStarred = sortedData[0]?.stargazers_count + 1 || 0;
 
   const handleSearch = (
