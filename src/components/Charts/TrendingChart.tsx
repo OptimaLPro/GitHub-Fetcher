@@ -16,6 +16,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
 import ErrorLimit from "../ui/ErrorLimit";
 import Loader from "../ui/Loader";
+import { RepoData } from "@/types/repoData";
 
 const chartConfig = {
   stars: {
@@ -23,12 +24,6 @@ const chartConfig = {
     color: "#2563eb",
   },
 } satisfies ChartConfig;
-
-type RepoData = {
-  name: string; // Repository name
-  language: string; // Language of the repo
-  stargazers_count: number; // Number of stars
-};
 
 export function TrendingChart({ enabled }: { enabled: boolean }) {
   const { data, isLoading, isError, refetch } = useQuery<RepoData[]>({
@@ -51,7 +46,7 @@ export function TrendingChart({ enabled }: { enabled: boolean }) {
   // Process the data to prepare it for the chart
   const structuredData = data!.slice(0, 5).map((repo) => ({
     name: repo.name,
-    language: repo.language ?? "Unknown", // Handle cases with no language
+    language: repo.language ?? "Unknown",
     stars: repo.stargazers_count,
   }));
 
@@ -77,7 +72,7 @@ export function TrendingChart({ enabled }: { enabled: boolean }) {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value} // Display repo names
+              tickFormatter={(value) => value}
             />
             <ChartTooltip
               cursor={false}

@@ -1,17 +1,19 @@
+import { Button } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
 
 export default function ToolipAlert() {
   return (
     <TooltipProvider delayDuration={0}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <Button variant="default" className="ml-3" >Note!</Button>
+          <Button variant="default" className="ml-3">
+            Note!
+          </Button>
         </TooltipTrigger>
         <TooltipContent>
           <p className="text-lg">

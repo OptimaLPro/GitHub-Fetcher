@@ -2,8 +2,6 @@ import { motion } from "framer-motion";
 import { PropsWithChildren } from "react";
 
 const PageTransition = ({ children }: PropsWithChildren) => {
- 
-
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.995 }}

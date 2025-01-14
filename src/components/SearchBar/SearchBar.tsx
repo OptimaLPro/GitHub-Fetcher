@@ -1,10 +1,4 @@
-import { useState } from "react";
-import {
-  ArrowDownWideNarrow,
-  ArrowUpWideNarrow,
-  Filter,
-  Search,
-} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -12,8 +6,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import {
+  ArrowDownWideNarrow,
+  ArrowUpWideNarrow,
+  Filter,
+  Search,
+} from "lucide-react";
+import { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -40,7 +40,7 @@ export function SearchBar({
 }: SearchBarProps) {
   const [starsValue, setStarsValue] = useState<number>(stars);
   const [queryValue, setQueryValue] = useState<string>(query);
-  const [orderValue, setOrderValue] = useState<string>("desc");
+  const [orderValue, setOrderValue] = useState<string>(order);
 
   const handleSearch = () => {
     onSearch(queryValue, starsValue, orderValue);

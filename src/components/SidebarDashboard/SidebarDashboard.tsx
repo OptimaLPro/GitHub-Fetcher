@@ -14,8 +14,8 @@ export default function SidebarDashboard({
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-          <SidebarTrigger />
-          {children}
+        <SidebarTrigger />
+        {children}
       </SidebarInset>
     </SidebarProvider>
   );

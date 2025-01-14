@@ -1,7 +1,7 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Router from "../Router";
 import "./App.css";
 import SidebarDashboard from "./components/SidebarDashboard/SidebarDashboard";
-import Router from "../Router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 function App() {
   const queryClient = new QueryClient();

@@ -8,9 +8,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ExternalLink } from "lucide-react";
 import { RepoStatsChart } from "../Charts/RepoStatsChart";
 import RepoPropBlock from "./RepoPropBlock";
-import { ExternalLink } from "lucide-react";
 
 export function RepoDialog({ repo }: any) {
   const RedirectGithub = (url: string) => {

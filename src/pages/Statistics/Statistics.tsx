@@ -1,16 +1,16 @@
-import { useState } from "react";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-  SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { LanguageChart } from "@/components/Charts/LanguagesChart";
 import { StarsByLang } from "@/components/Charts/StarsByLangChart";
-import { TrendingChart } from "@/components/Charts/TrendingChart";
 import { TopRepositoryInChart } from "@/components/Charts/TopRepositoryInChart";
+import { TrendingChart } from "@/components/Charts/TrendingChart";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useState } from "react";
 import ToolipAlert from "./ToolipAlert";
 
 export default function Statistics() {
@@ -30,11 +30,11 @@ export default function Statistics() {
             </SelectTrigger>
             <ToolipAlert />
             <SelectContent>
-              <SelectItem value="language">Language Chart</SelectItem>
               <SelectItem value="trending">
                 5 Trending Repos This Month
               </SelectItem>
               <SelectItem value="best-year">Best Repo Of The Year</SelectItem>
+              <SelectItem value="language">Language Chart</SelectItem>
               <SelectItem value="stars">Stars by Language Chart</SelectItem>
             </SelectContent>
           </Select>

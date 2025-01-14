@@ -11,7 +11,7 @@ const useRepositories = (
   useQuery({
     queryKey: ["repositories", page, perPage, stars, query, order],
     queryFn: () => fetchRepositories({ page, perPage, stars, query, order }),
-    retry: 0,
+    retryDelay: 5000,
     staleTime: 300000, // 5 minutes
     refetchOnWindowFocus: false,
   });

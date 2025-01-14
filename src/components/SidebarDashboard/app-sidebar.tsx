@@ -1,4 +1,3 @@
-import { ChartLine, Github, Heart, Home } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -10,6 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { ChartLine, Github, Heart, Home } from "lucide-react";
 import { Link, useLocation } from "react-router";
 
 const items = [
