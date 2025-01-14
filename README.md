@@ -24,7 +24,7 @@ This project consists of two parts: a frontend application and a backend applica
 1. Clone the frontend repository:
 
    ```bash
-   git clone https://github.com/OptimaLPro/zest-assignment.git
+   git clone https://github.com/OptimaLPro/GitHub-Fetcher-Zest.git
    cd zest-assignment
    ```
 
@@ -57,5 +57,5 @@ Ensure the backend server is running before using the frontend application.
 
 ### Link to Backend repository
   ```
-  https://github.com/OptimaLPro/zest-backend
+  https://github.com/OptimaLPro/GitHub-Fetcher-Backend-Zest
   ```
