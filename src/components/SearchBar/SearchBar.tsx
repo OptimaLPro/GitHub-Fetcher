@@ -13,24 +13,31 @@ import { Slider } from "@/components/ui/slider";
 type SearchBarProps = {
   onSearch: (query: string, stars: number) => void;
   maxStars: number;
+  query: string;
+  stars: number;
 };
 
-export function SearchBar({ onSearch, maxStars }: SearchBarProps) {
-  const [query, setQuery] = useState("");
-  const [stars, setStars] = useState(maxStars);
+export function SearchBar({ onSearch, maxStars, query, stars }: SearchBarProps) {
+  const [starsValue, setStarsValue] = useState<number>(stars);
+  const [queryValue, setQueryValue] = useState<string>(query);
+  
 
   const handleSearch = () => {
     console.log("searching", query, stars);
-    onSearch(query, stars);
+    onSearch(queryValue, starsValue);
+  };
+
+  const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setQueryValue(e.target.value);
   };
 
   const handleSliderChange = (value: number[]) => {
-    setStars(value[0]);
+    setStarsValue(value[0]); // Update stars in parent component
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Math.min(Number(e.target.value), 100);
-    setStars(value);
+    const value = Math.min(Number(e.target.value), maxStars);
+    setStarsValue(value); // Update stars in parent component
   };
 
   return (
@@ -39,8 +46,8 @@ export function SearchBar({ onSearch, maxStars }: SearchBarProps) {
         <Input
           type="text"
           placeholder="Repository Name"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={queryValue}
+          onChange={(e) => handleQueryChange(e)} // Update query in parent component
         />
       </div>
       <Popover>
@@ -55,14 +62,14 @@ export function SearchBar({ onSearch, maxStars }: SearchBarProps) {
               <Label className="w-[50%]">Min Stars:</Label>
               <Input
                 type="number"
-                value={stars}
+                value={starsValue}
                 onChange={handleInputChange}
                 max={maxStars}
               />
             </div>
             <Slider
-              value={[stars]} // Bind the slider value to sliderStars state
-              onValueChange={handleSliderChange} // Update state on slider change
+              value={[starsValue]} // Bind the slider value to stars prop
+              onValueChange={handleSliderChange} // Update stars in parent component
               max={maxStars}
               step={1}
             />

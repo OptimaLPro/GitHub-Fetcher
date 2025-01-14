@@ -2,6 +2,7 @@ import CardRepo from "@/components/CardRepo/CardRepo";
 import PageTransition from "@/components/PageTransition/PageTransition";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
 import { Button } from "@/components/ui/button";
+import ErrorLimit from "@/components/ui/ErrorLimit";
 import Loader from "@/components/ui/Loader";
 import useRepositories from "@/hooks/useRepositories";
 import { AnimatePresence } from "framer-motion";
@@ -15,8 +16,8 @@ export default function RepositoryList() {
   });
 
   const [page, setPage] = useState(1);
-  const [query, setQuery] = useState<string | undefined>(undefined);
-  const [stars, setStars] = useState<number | undefined>(undefined);
+  const [query, setQuery] = useState<string>("");
+  const [stars, setStars] = useState<number>(0);
 
   const { data, isLoading, isError } = useRepositories(page, 9, stars, query);
 
@@ -27,15 +28,16 @@ export default function RepositoryList() {
   }, [data]);
 
   if (isLoading) return <Loader />;
-  if (isError) return <p>Error loading repositories.</p>;
+  if (isError) return <ErrorLimit />;
 
-  const mostStarred = data[0]?.stargazers_count || 0;
+  const { sortedData, totalCount } = data;
+  const mostStarred = sortedData[0]?.stargazers_count + 1 || 0;
 
   const handleSearch = (newQuery: string, newStars: number) => {
     console.log("searching", newQuery, newStars);
     setQuery(newQuery);
     setStars(newStars);
-    setPage(1); // Reset to the first page for new searches
+    setPage(1);
   };
 
   return (
@@ -43,10 +45,15 @@ export default function RepositoryList() {
       <PageTransition>
         <div className="space-y-6">
           <div className="mb-8">
-            <SearchBar onSearch={handleSearch} maxStars={mostStarred} />
+            <SearchBar
+              onSearch={handleSearch}
+              maxStars={mostStarred}
+              query={query}
+              stars={stars}
+            />
           </div>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {fetchedData?.map((repo: any) => (
+            {sortedData?.map((repo: any) => (
               <CardRepo
                 key={repo.id}
                 repo={repo}
@@ -64,7 +71,10 @@ export default function RepositoryList() {
                 </Button>
               )}
             </div>
-            <span>Page {page}</span>
+            <span className="text-gray-500">
+              {totalCount.toLocaleString()} Results,
+              <span className="font-semibold"> Page {page}</span>
+            </span>
             <Button onClick={() => setPage((p) => p + 1)}>Next</Button>
           </div>
         </div>
