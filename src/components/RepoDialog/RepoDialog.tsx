@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { ChartConfig } from "@/components/ui/chart";
 import {
   Dialog,
   DialogContent,
@@ -8,51 +9,40 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import RepoPropBlock from "./RepoPropBlock";
 
 const chartConfig = {
-    visitors: {
-      label: "Visitors",
-    },
-    chrome: {
-      label: "Chrome",
-      color: "hsl(var(--chart-1))",
-    },
-    safari: {
-      label: "Safari",
-      color: "hsl(var(--chart-2))",
-    },
-    firefox: {
-      label: "Firefox",
-      color: "hsl(var(--chart-3))",
-    },
-    edge: {
-      label: "Edge",
-      color: "hsl(var(--chart-4))",
-    },
-    other: {
-      label: "Other",
-      color: "hsl(var(--chart-5))",
-    },
-  } satisfies ChartConfig
-  
-import { Label } from "@/components/ui/label";
-import { Pie, PieChart } from "recharts";
+  visitors: {
+    label: "Visitors",
+  },
+  chrome: {
+    label: "Chrome",
+    color: "hsl(var(--chart-1))",
+  },
+  safari: {
+    label: "Safari",
+    color: "hsl(var(--chart-2))",
+  },
+  firefox: {
+    label: "Firefox",
+    color: "hsl(var(--chart-3))",
+  },
+  edge: {
+    label: "Edge",
+    color: "hsl(var(--chart-4))",
+  },
+  other: {
+    label: "Other",
+    color: "hsl(var(--chart-5))",
+  },
+} satisfies ChartConfig;
+
+import { RepoStatsChart } from "../Charts/RepoStatsChart";
 
 export function RepoDialog({ repo }: any) {
   const RedirectGithub = (url: string) => {
     window.open(url, "_blank");
   };
-
-  const chartData = [
-    { label: "Stars", value: repo.stargazers_count },
-    { label: "Forks", value: repo.forks_count },
-  ];
 
   return (
     <Dialog>
@@ -61,7 +51,7 @@ export function RepoDialog({ repo }: any) {
           <Button>Show More</Button>
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-xl">
+      <DialogContent className="sm:max-w-[45%]">
         <DialogHeader>
           <DialogTitle>{repo.name}</DialogTitle>
           <DialogDescription>
@@ -94,23 +84,7 @@ export function RepoDialog({ repo }: any) {
             value={repo.license?.name || "Not specified"}
           />
         </div>
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
-        >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
-              innerRadius={60}
-            />
-          </PieChart>
-        </ChartContainer>
+        <RepoStatsChart repo={repo} />
         <DialogFooter className="flex justify-center">
           <Button onClick={() => RedirectGithub(repo.html_url)}>
             View on GitHub
@@ -120,16 +94,3 @@ export function RepoDialog({ repo }: any) {
     </Dialog>
   );
 }
-
-const RepoPropBlock = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: string | number;
-}) => (
-  <div className="grid items-center grid-cols-2 gap-4">
-    <Label>{label}</Label>
-    <div>{value}</div>
-  </div>
-);
