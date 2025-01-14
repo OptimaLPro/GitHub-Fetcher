@@ -1,50 +1,61 @@
-# React + TypeScript + Vite
+# Zest Assignment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project consists of two parts: a frontend application and a backend application. Together, they provide a platform to fetch, sort, and like GitHub repositories, with a focus on displaying repository data sorted by the most stars in descending order.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## **Frontend**
 
-## Expanding the ESLint configuration
+### Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Dashboard Interface**: Displays repository data sorted by the repo with the most stars in descending order.
+- **Sorting and Filtering**: Users can sort repositories by stars and filter their favorite repositories.
+- **Favorites Management**: Save and manage favorite repositories.
 
-- Configure the top-level `parserOptions` property like this:
+### Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+#### Prerequisites
+
+- Node.js (v16 or higher) installed on your machine.
+- npm (Node Package Manager).
+
+#### Installation
+
+1. Clone the frontend repository:
+
+   ```bash
+   git clone https://github.com/OptimaLPro/zest-assignment.git
+   cd zest-assignment
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+#### Running the Application
+
+Start the development server:
+
+```bash
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+The frontend application will run at `http://localhost:5173`.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### API Integration
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Ensure the backend server is running before using the frontend application.
+
+### Environment Setup
+
+1. Create a `.env` file in the root directory:
+   ```
+   VITE_API_BASE_URL="http://localhost:5000"
+   ```
+
+### Link to Backend repository
+  ```
+  https://github.com/OptimaLPro/zest-backend
+  ```

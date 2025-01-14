@@ -1,4 +1,4 @@
-import { fetchStarsData } from "@/api/charts";
+import { fetchTrendingData } from "@/api/charts";
 import {
   Card,
   CardContent,
@@ -24,14 +24,16 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-type DataProps = {
-  [key: string]: number;
+type RepoData = {
+  name: string; // Repository name
+  language: string; // Language of the repo
+  stargazers_count: number; // Number of stars
 };
 
-export function StarsByLang({ enabled }: { enabled: boolean }) {
-  const { data, isLoading, isError, refetch } = useQuery<DataProps>({
-    queryKey: ["stars-distribution"],
-    queryFn: fetchStarsData,
+export function TrendingChart({ enabled }: { enabled: boolean }) {
+  const { data, isLoading, isError, refetch } = useQuery<RepoData[]>({
+    queryKey: ["trending-repos"],
+    queryFn: () => fetchTrendingData(5, "month"),
     retry: 0,
     staleTime: 300000, // 5 minutes
     refetchOnWindowFocus: false,
@@ -46,35 +48,36 @@ export function StarsByLang({ enabled }: { enabled: boolean }) {
     return <ErrorLimit refetch={refetch} />;
   }
 
-  const structuredObject = Object.entries(data!).map(([language, stars]) => ({
-    language,
-    stars,
+  // Process the data to prepare it for the chart
+  const structuredData = data!.slice(0, 5).map((repo) => ({
+    name: repo.name,
+    language: repo.language ?? "Unknown", // Handle cases with no language
+    stars: repo.stargazers_count,
   }));
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Stars Distribution by Language</CardTitle>
+        <CardTitle>Top 5 Trending Repositories (Last 30 Days)</CardTitle>
         <CardDescription>
-          Stars of Top 100 Repositories in each Language
+          Stars distribution for the top repositories by language
         </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
           <BarChart
-            accessibilityLayer
-            data={structuredObject}
+            data={structuredData}
             margin={{
               top: 20,
             }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="language"
+              dataKey="name"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value} // Display language names
+              tickFormatter={(value) => value} // Display repo names
             />
             <ChartTooltip
               cursor={false}
@@ -82,11 +85,11 @@ export function StarsByLang({ enabled }: { enabled: boolean }) {
             />
             <Bar dataKey="stars" fill="var(--color-stars)" radius={8}>
               <LabelList
-              position="top"
-              offset={12}
-              className="font-semibold fill-foreground"
-              fontSize={12}
-              formatter={(value: number) => value.toLocaleString()}
+                position="top"
+                offset={12}
+                className="font-semibold fill-foreground"
+                fontSize={12}
+                formatter={(value: number) => value.toLocaleString()}
               />
             </Bar>
           </BarChart>

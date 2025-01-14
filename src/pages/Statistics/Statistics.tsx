@@ -9,6 +9,8 @@ import {
 import { Label } from "@/components/ui/label";
 import { LanguageChart } from "@/components/Charts/LanguagesChart";
 import { StarsByLang } from "@/components/Charts/StarsByLangChart";
+import { TrendingChart } from "@/components/Charts/TrendingChart";
+import { TopRepositoryInChart } from "@/components/Charts/TopRepositoryInChart";
 import ToolipAlert from "./ToolipAlert";
 
 export default function Statistics() {
@@ -29,6 +31,10 @@ export default function Statistics() {
             <ToolipAlert />
             <SelectContent>
               <SelectItem value="language">Language Chart</SelectItem>
+              <SelectItem value="trending">
+                5 Trending Repos This Month
+              </SelectItem>
+              <SelectItem value="best-year">Best Repo Of The Year</SelectItem>
               <SelectItem value="stars">Stars by Language Chart</SelectItem>
             </SelectContent>
           </Select>
@@ -46,6 +52,12 @@ export default function Statistics() {
           )}
           {selectedChart === "stars" && (
             <StarsByLang enabled={selectedChart === "stars"} />
+          )}
+          {selectedChart === "trending" && (
+            <TrendingChart enabled={selectedChart === "trending"} />
+          )}
+          {selectedChart === "best-year" && (
+            <TopRepositoryInChart enabled={selectedChart === "best-year"} />
           )}
         </div>
       </main>
