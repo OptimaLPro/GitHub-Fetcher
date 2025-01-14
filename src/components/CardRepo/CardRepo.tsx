@@ -9,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { RepoDialog } from "../RepoDialog/RepoDialog";
 
 type CardRepoProps = {
   repo: any;
@@ -23,10 +24,6 @@ const CardRepo: React.FC<CardRepoProps> = ({
   favorites,
   setFavorites,
 }) => {
-  const RedirectGithub = (url: string) => {
-    window.open(url, "_blank");
-  };
-
   const toggleFavorite = (repo: any) => {
     console.log(repo);
     setFavorites((prev: any) => {
@@ -69,8 +66,10 @@ const CardRepo: React.FC<CardRepoProps> = ({
         <p>Language: {repo.language || "Unknown"}</p>
       </CardContent>
       <CardFooter className="flex items-center justify-between mt-auto">
-        <Button variant="secondary">⭐ {repo.stargazers_count.toLocaleString()}</Button>
-        <Button onClick={() => RedirectGithub(repo.html_url)}>View Repo</Button>
+        <Button variant="secondary">
+          ⭐ {repo.stargazers_count.toLocaleString()}
+        </Button>
+        <RepoDialog repo={repo} />
       </CardFooter>
     </Card>
   );
