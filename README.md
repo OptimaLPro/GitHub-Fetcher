@@ -25,7 +25,7 @@ This project consists of two parts: a frontend application and a backend applica
 
    ```bash
    git clone https://github.com/OptimaLPro/GitHub-Fetcher-Zest.git
-   cd zest-assignment
+   cd GitHub-Fetcher-Zest
    ```
 
 2. Install dependencies:
