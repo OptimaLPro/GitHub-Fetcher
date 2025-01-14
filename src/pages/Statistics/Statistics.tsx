@@ -36,7 +36,7 @@ export default function Statistics() {
         {!selectedChart && (
           <div className="flex justify-center">
             <Label className="mt-48 text-5xl text-gray-300">
-              Please select a chart to display.
+              Please select a chart to display
             </Label>
           </div>
         )}

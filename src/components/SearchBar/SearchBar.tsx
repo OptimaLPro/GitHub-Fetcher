@@ -43,7 +43,6 @@ export function SearchBar({
   const [orderValue, setOrderValue] = useState<string>("desc");
 
   const handleSearch = () => {
-    console.log("searching", query, stars, order);
     onSearch(queryValue, starsValue, orderValue);
   };
 
@@ -65,7 +64,6 @@ export function SearchBar({
   };
 
   const ResetFilters = () => {
-    console.log("resetting filters");
     setQueryValue("");
     setStarsValue(0);
     setOrderValue("desc");

@@ -1,8 +1,8 @@
-import { ChartLine, Heart, Home } from "lucide-react";
-
+import { ChartLine, Github, Heart, Home } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 
 const items = [
   {
@@ -31,6 +31,8 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const location = useLocation(); // Get the current location
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -40,9 +42,16 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton
+                    asChild
+                    className={
+                      location.pathname === item.url
+                        ? "bg-zinc-700 text-white transition hover:bg-zinc-700 hover:text-white"
+                        : "hover:bg-zinc-300 transition"
+                    }
+                  >
                     <Link to={item.url}>
-                      <item.icon />
+                      <item.icon className="bg-red" />
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
@@ -52,6 +61,18 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <a
+          href="https://github.com/OptimaLPro"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <div className="flex items-center justify-center gap-2">
+            <Github />
+            Nati
+          </div>
+        </a>
+      </SidebarFooter>
     </Sidebar>
   );
 }

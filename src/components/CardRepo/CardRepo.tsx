@@ -28,7 +28,6 @@ const CardRepo: React.FC<CardRepoProps> = ({
   setFavorites,
 }) => {
   const toggleFavorite = (repo: any) => {
-    console.log(repo);
     setFavorites((prev: any) => {
       const newFavorites = { ...prev };
 

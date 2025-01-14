@@ -36,7 +36,6 @@ export default function RepositoryList() {
     newStars: number,
     newOrder: string
   ) => {
-    console.log("searching", newQuery, newStars, newOrder);
     setQuery(newQuery);
     setStars(newStars);
     setPage(1);

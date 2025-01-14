@@ -26,7 +26,7 @@ export function RepoDialog({ repo }: any) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[45%]">
         <DialogHeader>
-          <DialogTitle>{repo.name}</DialogTitle>
+          <DialogTitle className="text-3xl">{repo.name}</DialogTitle>
           <DialogDescription>
             {repo.description || "No description provided."}
           </DialogDescription>
@@ -57,7 +57,9 @@ export function RepoDialog({ repo }: any) {
             value={repo.license?.name || "Not specified"}
           />
         </div>
-        <RepoStatsChart repo={repo} />
+        <div className="w-[60%] mx-auto">
+          <RepoStatsChart repo={repo} />
+        </div>
         <DialogFooter className="flex justify-center">
           <Button onClick={() => RedirectGithub(repo.html_url)}>
             <ExternalLink />
