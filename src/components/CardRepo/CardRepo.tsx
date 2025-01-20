@@ -1,5 +1,7 @@
+import { toggleFavorite } from "@/api/favorites";
 import { motion } from "framer-motion";
 import { Heart } from "lucide-react";
+import { RepoDialog } from "../RepoDialog/RepoDialog";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -9,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { RepoDialog } from "../RepoDialog/RepoDialog";
+import { useEffect } from "react";
 
 type CardRepoProps = {
   repo: any;
@@ -19,33 +21,38 @@ type CardRepoProps = {
   >;
 };
 
-// Add a new field to store the date and time that the repository was added to the local storage
-const added_localstorage = new Date().toLocaleString();
-
 const CardRepo: React.FC<CardRepoProps> = ({
   repo,
   favorites,
   setFavorites,
 }) => {
-  const toggleFavorite = (repo: any) => {
-    setFavorites((prev: any) => {
-      const newFavorites = { ...prev };
+  const handleToggleFavorite = async (repo: any) => {
+    try {
+      const isFavorite = favorites[repo.id];
+      await toggleFavorite(repo, isFavorite);
 
-      if (newFavorites[repo.id]) {
-        delete newFavorites[repo.id];
-      } else {
-        newFavorites[repo.id] = { ...repo, added_localstorage };
-      }
-
-      localStorage.setItem("favorites", JSON.stringify(newFavorites));
-      return newFavorites;
-    });
+      setFavorites((prev) => {
+        const newFavorites = { ...prev };
+        if (isFavorite) {
+          delete newFavorites[repo.id];
+        } else {
+          newFavorites[repo.id] = true;
+        }
+        return newFavorites;
+      });
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
   };
+
+  useEffect(() => {
+    console.log("Favorites:", favorites);
+  }, [favorites]);
 
   return (
     <Card key={repo.id} className="relative flex flex-col shadow-md">
       <motion.button
-        onClick={() => toggleFavorite(repo)}
+        onClick={() => handleToggleFavorite(repo)}
         className="absolute top-4 right-4"
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0 }}

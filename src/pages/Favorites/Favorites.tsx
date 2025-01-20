@@ -1,22 +1,41 @@
+import { fetchFavorites } from "@/api/favorites";
 import { fetchRepositoryByID } from "@/api/repositories";
 import CardRepo from "@/components/CardRepo/CardRepo";
 import PageTransition from "@/components/PageTransition/PageTransition";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
+import ErrorLimit from "@/components/ui/ErrorLimit";
+import Loader from "@/components/ui/Loader";
 import { isOlderThan } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function Favorites() {
   const [hasUpdatedFavorites, setHasUpdatedFavorites] = useState(false);
-  const [favorites, setFavorites] = useState<{ [key: string]: any }>(() => {
-    const storedFavorites = localStorage.getItem("favorites");
-    return storedFavorites ? JSON.parse(storedFavorites) : {};
-  });
+  const [favorites, setFavorites] = useState<{ [key: string]: any }>({});
   const [filteredFavorites, setFilteredFavorites] = useState<any[]>([]);
   const [query, setQuery] = useState<string>("");
   const [stars, setStars] = useState<number>(0);
   const [order, setOrder] = useState<string>("desc");
 
+  const { data, isLoading, isError, refetch } = useQuery({
+    queryKey: ["favorites"],
+    queryFn: fetchFavorites,
+    refetchOnWindowFocus: false,
+  });
+
+  // Load favorites from server response
+  useEffect(() => {
+    if (data) {
+      const transformed = data.reduce((acc: any, repo: any) => {
+        acc[repo.id] = repo;
+        return acc;
+      }, {});
+      setFavorites(transformed || {});
+    }
+  }, [data]);
+
+  // Update stale repositories
   useEffect(() => {
     const updateOldFavorites = async () => {
       const updatedFavorites = { ...favorites };
@@ -39,18 +58,17 @@ export default function Favorites() {
 
       if (hasChanges) {
         setFavorites(updatedFavorites);
-        localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
         setHasUpdatedFavorites(true);
       }
     };
 
-    if (!hasUpdatedFavorites) {
+    if (Object.keys(favorites).length > 0 && !hasUpdatedFavorites) {
       updateOldFavorites();
     }
   }, [favorites, hasUpdatedFavorites]);
 
+  // Filter and sort favorites
   useEffect(() => {
-    // Filter and sort favorites whenever query, stars, or order changes
     const favoriteArray = Object.values(favorites);
 
     const updatedFavorites = favoriteArray
@@ -67,6 +85,13 @@ export default function Favorites() {
 
     setFilteredFavorites(updatedFavorites);
   }, [query, stars, order, favorites]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (isError) {
+    return <ErrorLimit refetch={refetch} />;
+  }
 
   if (Object.keys(favorites).length === 0) {
     return (

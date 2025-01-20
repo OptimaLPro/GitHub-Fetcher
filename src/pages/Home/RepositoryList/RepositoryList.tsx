@@ -1,3 +1,4 @@
+import { fetchFavorites } from "@/api/favorites";
 import CardRepo from "@/components/CardRepo/CardRepo";
 import PageTransition from "@/components/PageTransition/PageTransition";
 import { SearchBar } from "@/components/SearchBar/SearchBar";
@@ -6,17 +7,15 @@ import ErrorLimit from "@/components/ui/ErrorLimit";
 import Loader from "@/components/ui/Loader";
 import useRepositories from "@/hooks/useRepositories";
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function RepositoryList() {
-  const [favorites, setFavorites] = useState<{ [key: string]: boolean }>(() => {
-    const storedFavorites = localStorage.getItem("favorites");
-    return storedFavorites ? JSON.parse(storedFavorites) : {};
-  });
+  const [favorites, setFavorites] = useState<{ [key: string]: boolean }>({});
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState<string>("");
   const [stars, setStars] = useState<number>(0);
   const [order, setOrder] = useState<string>("desc");
+
   const { data, isLoading, isError, refetch } = useRepositories(
     page,
     9,
@@ -24,6 +23,26 @@ export default function RepositoryList() {
     query,
     order
   );
+
+  useEffect(() => {
+    const loadFavorites = async () => {
+      try {
+        const favoriteRepos = await fetchFavorites();
+        const favoriteMap = favoriteRepos.reduce(
+          (acc: { [key: string]: boolean }, repo: { id: string }) => {
+            acc[repo.id] = true;
+            return acc;
+          },
+          {}
+        );
+        setFavorites(favoriteMap);
+      } catch (error) {
+        console.error("Error loading favorites:", error);
+      }
+    };
+
+    loadFavorites();
+  }, []);
 
   if (isLoading) return <Loader />;
   if (isError) return <ErrorLimit refetch={refetch} />;
