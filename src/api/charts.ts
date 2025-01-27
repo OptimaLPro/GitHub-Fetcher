@@ -1,10 +1,8 @@
 import axios from "axios";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
 export const fetchLanguageData = async () => {
   try {
-    const response = await axios(`${API_BASE_URL}/api/charts/languages`);
+    const response = await axios(`/api/charts/languages`);
     return response.data;
   } catch (error) {
     console.error("Error fetching language data:", error);
@@ -14,9 +12,7 @@ export const fetchLanguageData = async () => {
 
 export const fetchStarsData = async () => {
   try {
-    const response = await axios(
-      `${API_BASE_URL}/api/charts/stars-distribution`
-    );
+    const response = await axios(`/api/charts/stars-distribution`);
     return response.data;
   } catch (error) {
     console.error("Error fetching stars data:", error);
@@ -26,9 +22,7 @@ export const fetchStarsData = async () => {
 
 export const fetchTrendingData = async (per_page = 5, lastDate = "month") => {
   try {
-    const response = await axios(
-      `${API_BASE_URL}/api/charts/trending-repos`
-    ,{
+    const response = await axios(`/api/charts/trending-repos`, {
       params: {
         per_page: per_page,
         lastDate: lastDate,
