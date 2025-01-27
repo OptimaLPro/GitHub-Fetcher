@@ -11,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { useEffect } from "react";
 
 type CardRepoProps = {
   repo: any;
@@ -44,10 +43,6 @@ const CardRepo: React.FC<CardRepoProps> = ({
       console.error("Error toggling favorite:", error);
     }
   };
-
-  useEffect(() => {
-    console.log("Favorites:", favorites);
-  }, [favorites]);
 
   return (
     <Card key={repo.id} className="relative flex flex-col shadow-md">
