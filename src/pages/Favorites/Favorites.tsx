@@ -42,12 +42,12 @@ export default function Favorites() {
       let hasChanges = false;
 
       for (const [key, repo] of Object.entries(favorites)) {
-        if (isOlderThan(repo.added_localstorage, 24 * 60 * 60 * 1000)) {
+        if (isOlderThan(repo.added_favorites, 24 * 60 * 60 * 1000)) {
           try {
             const updatedRepo = await fetchRepositoryByID(repo.id);
             updatedFavorites[key] = {
               ...updatedRepo,
-              added_localstorage: new Date().toLocaleString(),
+              added_favorites: new Date().toLocaleString(),
             };
             hasChanges = true;
           } catch (error) {
