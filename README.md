@@ -46,16 +46,12 @@ The frontend application will run at `http://localhost:5173`.
 
 ### API Integration
 
-Ensure the backend server is running before using the frontend application.
-
-### Environment Setup
-
-1. Create a `.env` file in the root directory:
-   ```
-   VITE_API_BASE_URL="http://localhost:5000"
-   ```
+Ensure the backend server is running before using the frontend application.  
+The frontend uses a proxy configured in `vite.config.ts` to redirect API requests to the backend for CORS handling.  
+The current proxy is set to `http://localhost:5001`.
 
 ### Link to Backend repository
-  ```
-  https://github.com/OptimaLPro/GitHub-Fetcher-Backend-Zest
-  ```
+
+```
+https://github.com/OptimaLPro/GitHub-Fetcher-Backend-Zest
+```
