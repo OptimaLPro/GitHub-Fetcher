@@ -1,4 +1,4 @@
-# Zest Assignment
+# GitHub Fetcher
 
 This project consists of two parts: a frontend application and a backend application. Together, they provide a platform to fetch, sort, and like GitHub repositories, with a focus on displaying repository data sorted by the most stars in descending order.
 
@@ -24,8 +24,8 @@ This project consists of two parts: a frontend application and a backend applica
 1. Clone the frontend repository:
 
    ```bash
-   git clone https://github.com/OptimaLPro/GitHub-Fetcher-Zest.git
-   cd GitHub-Fetcher-Zest
+   git clone https://github.com/OptimaLPro/GitHub-Fetcher.git
+   cd GitHub-Fetcher
    ```
 
 2. Install dependencies:
@@ -53,5 +53,5 @@ The current proxy is set to `http://localhost:5001`.
 ### Link to Backend repository
 
 ```
-https://github.com/OptimaLPro/GitHub-Fetcher-Backend-Zest
+https://github.com/OptimaLPro/GitHub-Fetcher-Backend
 ```
